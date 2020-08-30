@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-// DATA DIVISION
+////// DATA DIVISION //////
 
 bool running;
 int opt;
@@ -16,6 +16,7 @@ vector<string> pcap_white;
 vector<string> pcap_black;
 
 vector<vector<string>> board;
+vector<vector<string>> bsave;
 vector<vector<string>> blank_board = {{"    ", "| A|", "| B|", "| C|", "| D|", "| E|", "| F|", "| G|", "| H|"}, 
                                       {"| 8|", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]"}, 
                                       {"| 7|", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]"}, 
@@ -35,7 +36,7 @@ vector<vector<string>> def_board = {{"    ", "| A|", "| B|", "| C|", "| D|", "| 
                                     {"| 2|", "[wP]", "[wP]", "[wP]", "[wP]", "[wP]", "[wP]", "[wP]", "[wP]"}, 
                                     {"| 1|", "[wR]", "[wN]", "[wB]", "[wQ]", "[wK]", "[wB]", "[wN]", "[wR]"}};
 
-vector<string> d_letter_map = {"A", "B", "C", "D", "E", "F", "G", "H"};
+vector<string> d_letter_map = {" ", "A", "B", "C", "D", "E", "F", "G", "H"};
 map<string, int> c_letter_map = {{"A", 1}, {"a", 1}, 
                                  {"B", 2}, {"b", 2}, 
                                  {"C", 3}, {"c", 3}, 
@@ -51,7 +52,7 @@ map<string, int> piece_map = {{"wP", 11}, {"bP", 21},
                               {"wQ", 15}, {"bQ", 25}, 
                               {"wK", 16}, {"bK", 26}};
 
-// MACRO DIVISON
+////// MACRO DIVISON //////
 
 void init_opt(int p)
 {
@@ -66,51 +67,65 @@ void renderscr(int scr)
 {
     switch (scr)
     {
-      case 1:
-        cout << "::::" << endl;
-        cout << "::::    Command Line Chess" << endl;
-        cout << "::::" << endl;
-        cout << "::::" << endl;
-        cout << "::::    Version 1.0.0" << endl;
-        cout << "::::    Copyright (C) 2020 - Galaxius Computer Software" << endl;
-        cout << "::::" << endl;
-        cout << endl;
-        cout << endl;
-        cout << "== Press Enter to Begin ==" << endl;
-        break;
-      case 2:
-        cout << endl;
-        cout << "Main Menu" << endl;
-        cout << endl;
-        cout << "1. Start New Game" << endl;
-        cout << "2. Options" << endl;
-        cout << "3. Credits" << endl;
-        cout << "4. Quit" << endl;
-        cout << endl;
-        cout << endl;
-        cout << "Select Option: ";
-        break;
-      case 3:
-        cout << endl;
-        cout << "" << endl;
-        break;
-      case 4:
-        cout << endl;
-        cout << "Game Credits" << endl;
-        cout << endl;
-        cout << "Command Line Chess" << endl;
-        cout << "Copyright (C) 2020 - Galaxius Computer Software" << endl;
-        cout << "Programmed by GalacticSand" << endl;
-        cout << endl;
-        cout << endl;
-        cout << "== Press Enter to Continue ==" << endl;
-        break;
-      default:
-        break;
+        case 0:
+            clearscr();
+            cout << endl;
+            cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
+            cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
+            cout << "::::     ______    _         ______    ______    ______     ::::" << endl;
+            cout << "::::    | |    |  | |    |  | |       | |    |  | |    |    ::::" << endl;
+            cout << "::::    | |       | |____|  | |____   |_|____   |_|____     ::::" << endl;
+            cout << "::::    | |       | |    |  | |        _     |   _     |    ::::" << endl;
+            cout << "::::    |_|____|  |_|    |  |_|____   |_|____|  |_|____|    ::::" << endl;
+            cout << "::::                                                        ::::" << endl;
+            cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
+            cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "-- CLChess - Version 1.0.0" << endl;
+            cout << "-- Galaxius Computer Software" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "== Press Enter to Begin ==" << endl;
+            pausescr();
+            break;
+        case 1:
+            init_opt(5);
+            clearscr();
+            cout << endl;
+            cout << "::::" << endl;
+            cout << "::::    Main Menu" << endl;
+            cout << "::::" << endl;
+            cout << "::::    1. Start Game" << endl;
+            cout << "::::    2. Continue Game" << endl;
+            cout << "::::    3. Help" << endl;
+            cout << "::::    4. Credits" << endl;
+            cout << "::::    5. Quit" << endl;
+            cout << "::::" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "Select Option: ";
+            cin >> opt;
+            break;
+        case 2:
+            clearscr();
+            cout << endl;
+            cout << "::::    Game Credits" << endl;
+            cout << "::::" << endl;
+            cout << "::::    Command Line Chess (CLChess)" << endl;
+            cout << "::::    Copyright (c) 2020 - Galaxius Computer Software" << endl;
+            cout << "::::    Programmed by GalacticSand" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "== Press Enter to Continue ==" << endl;
+            pausescr();
+            break;
+        default:
+            break;
     }
 }
 
-// PROCEDURAL DIVISION
+////// PROCEDURAL DIVISION //////
 
 int main()
 {
