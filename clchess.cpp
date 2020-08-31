@@ -10,6 +10,8 @@ bool running;
 int opt;
 string b_opt;
 
+vector<int> opt_list;
+
 string white_n;
 string black_n;
 vector<string> pcap_white;
@@ -54,16 +56,20 @@ map<string, int> piece_map = {{"wP", 11}, {"bP", 21},
 
 ////// MACRO DIVISON //////
 
+////// ////// SCREEN MANIPULATION
+
 void init_opt(int p)
 {
     opt = {};
-    for (int i = 0; i < p; i++) { opt.push_back(i + 1); }
+    for (int i = 0; i < p; i++) { opt_list.push_back(i + 1); }
 }
 
 void clearscr() { cout << "\033[2J\033[1;1H"; }
 void pausescr() { cin.get(); }
 
-void renderscr(int scr)
+////// ////// MENU RENDERING
+
+void mainrender(int scr)
 {
     switch (scr)
     {
@@ -124,6 +130,46 @@ void renderscr(int scr)
             break;
     }
 }
+
+void startgame_render(int scr)
+{
+    switch(scr)
+    {
+        case 0:
+            clearscr();
+            break;
+        case 1:
+            clearscr();
+            break;
+        default:
+            break;
+        
+    }
+}
+
+void contngame_render(int scr)
+{
+    switch(scr)
+    {
+        case 0:
+            break;
+        default:
+            break;
+    }
+}
+
+void help_render(int scr)
+{
+    switch(scr)
+    {
+        case 0:
+            break;
+        default:
+            break;
+    }
+}
+
+////// ////// MENU ARRANGEMENT
 
 ////// PROCEDURAL DIVISION //////
 
