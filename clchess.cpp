@@ -11,7 +11,10 @@ int opt;
 string b_opt;
 
 vector<int> opt_list;
+map<string, bool> b_opt_map = {{"Y", true}, {"y", true}
+                               {"N", false}, {"n", false}};
 
+int game_mode;
 string white_n;
 string black_n;
 vector<string> pcap_white;
@@ -143,9 +146,60 @@ void startgame_render(int scr)
     {
         case 0:
             clearscr();
+            cout << endl;
+            cout << "::::" << endl;
+            cout << "::::    Start Game / Game Mode" << endl;
+            cout << "::::" << endl;
+            cout << "::::    Choose Game Mode:" << endl;
+            cout << "::::    1. Standard Game" << endl;
+            cout << "::::    2. Custom Game (WIP)" << endl;
+            cout << "::::" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "Select: ";
+            cin >> game_mode;
             break;
         case 1:
             clearscr();
+            cout << endl;
+            cout << "::::" << endl;
+            cout << "::::    Start Game / Players" << endl;
+            cout << "::::" << endl;
+            cout << "::::    Player 1 (White): " << endl;
+            cout << "::::    Player 2 (Black): " << endl;
+            cout << "::::" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "Enter Player 1: ";
+            cin >> white_n;
+            break;
+        case 2:
+            clearscr();
+            cout << endl;
+            cout << "::::" << endl;
+            cout << "::::    Start Game / Players" << endl;
+            cout << "::::" << endl;
+            cout << "::::    Player 1 (White): " << white_n << endl;
+            cout << "::::    Player 2 (Black): " << endl;
+            cout << "::::" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "Enter Player 2: ";
+            cin >> black_n;
+            break;
+        case 3:
+            clearscr();
+            cout << endl;
+            cout << "::::" << endl;
+            cout << "::::    Start Game / Players" << endl;
+            cout << "::::" << endl;
+            cout << "::::    Player 1 (White): " << white_n << endl;
+            cout << "::::    Player 2 (Black): " << black_n << endl;
+            cout << "::::" << endl;
+            cout << endl;
+            cout << endl;
+            cout << "Start Game with these settings? (Y/N) ";
+            cin >> b_opt;
             break;
         default:
             break;
