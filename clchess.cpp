@@ -7,11 +7,12 @@ using namespace std;
 ////// DATA DIVISION //////
 
 bool running;
+bool proc_running;
 int opt;
 string b_opt;
 
 vector<int> opt_list;
-map<string, bool> b_opt_map = {{"Y", true}, {"y", true}
+map<string, bool> b_opt_map = {{"Y", true}, {"y", true}, 
                                {"N", false}, {"n", false}};
 
 int game_mode;
@@ -76,9 +77,28 @@ void init_opt(int p)
 void clearscr() { cout << "\033[2J\033[1;1H"; }
 void pausescr() { cin.get(); }
 
+void print_board(vector<vector<string>> p_board)
+{
+    for (int i = 0; i < p_board.size(); i++)
+    {
+        cout << "::::    ";
+        for (int j = 0; j < p_board[i].size(); j++) { cout << p_board[i][j]; }
+        cout << "    ::::" << endl;
+    }
+}
+
+void print_pcap()
+{
+    cout << "::::    White - Pieces Captured: ";
+    for (int i = 0; i < pcap_white.size(); i++) { cout << pcap_white[i] << " "; }
+    cout << endl << "::::    Black - Pieces Captured: ";
+    for (int i = 0; i < pcap_black.size(); i++) { cout << pcap_black[i] << " "; }
+    cout << endl;
+}
+
 ////// ////// MENU RENDERING
 
-void mainrender(int scr)
+void main_render(int scr)
 {
     switch (scr)
     {
@@ -135,12 +155,23 @@ void mainrender(int scr)
             cout << "== Press Enter to Continue ==" << endl;
             pausescr();
             break;
+        case 3:
+            clearscr();
+            cout << endl;
+            cout << "::::" << endl;
+            cout << "::::" << endl;
+            cout << "::::" << endl;
+            cout << "::::" << endl;
+            cout << endl;
+            cout << "Are you sure you want to quit? (Y/N) ";
+            cin >> b_opt;
+            if (b_opt == "Y" || b_opt == "y") { running = false; }
         default:
             break;
     }
 }
 
-void startgame_render(int scr)
+void start_render(int scr)
 {
     switch(scr)
     {
@@ -151,14 +182,13 @@ void startgame_render(int scr)
             cout << "::::    Start Game / Game Mode" << endl;
             cout << "::::" << endl;
             cout << "::::    Choose Game Mode:" << endl;
-            cout << "::::    1. Standard Game" << endl;
-            cout << "::::    2. Custom Game (WIP)" << endl;
+            cout << "::::    1. Regular Game" << endl;
+            cout << "::::    2. Sandbox Game (WIP)" << endl;
             cout << "::::" << endl;
             cout << endl;
             cout << endl;
             cout << "Select: ";
             cin >> game_mode;
-            break;
         case 1:
             clearscr();
             cout << endl;
@@ -172,7 +202,6 @@ void startgame_render(int scr)
             cout << endl;
             cout << "Enter Player 1: ";
             cin >> white_n;
-            break;
         case 2:
             clearscr();
             cout << endl;
@@ -186,7 +215,6 @@ void startgame_render(int scr)
             cout << endl;
             cout << "Enter Player 2: ";
             cin >> black_n;
-            break;
         case 3:
             clearscr();
             cout << endl;
@@ -201,13 +229,14 @@ void startgame_render(int scr)
             cout << "Start Game with these settings? (Y/N) ";
             cin >> b_opt;
             break;
+            if (b_opt == "Y" || b_opt == "y") { proc_running = false; }
         default:
             break;
         
     }
 }
 
-void contngame_render(int scr)
+void cont_render(int scr)
 {
     switch(scr)
     {
@@ -229,13 +258,71 @@ void help_render(int scr)
     }
 }
 
+////// ////// GAME RENDERING
+
+void game_render(int scr)
+{
+    switch(scr)
+    {
+        case 0:
+            clearscr();
+            print_board(board);
+            cout << "::::" << endl;
+            cout << "::::" << endl;
+            cout << "::::    " << white_n << " - " << black_n << endl;
+            cout << "::::" << endl;
+            print_pcap();
+            cout << "::::" << endl;
+            cout << "::::" << endl;
+            break;
+        case 1:
+            break;
+        default:
+            break;
+    }
+}
+
+////// ////// GAME ARRANGEMENT
+
+void game_arrng()
+{
+    
+}
+
 ////// ////// MENU ARRANGEMENT
+
+void menu_arrng()
+{
+    main_render(1);
+    switch(opt)
+    {
+        case 1:
+            proc_running = true;
+            while (proc_running) { start_render(0); }
+            break;
+        case 2:
+            proc_running = true;
+            while (proc_running) { cont_render(0); }
+            break;
+        case 3:
+            proc_running = true;
+            while (proc_running) { help_render(0); }
+            break;
+        case 4:
+            main_render(2);
+            break;
+        case 5:
+            main_render(3);
+            break;
+    }
+}
 
 ////// PROCEDURAL DIVISION //////
 
 int main()
 {
+    main_render(0);
     running = true;
-    while (running) { }
+    while (running) { menu_arrng(); }
     return 0;
 }
