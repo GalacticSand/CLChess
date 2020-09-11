@@ -6,7 +6,7 @@ using namespace std;
 
 ////// DATA DIVISION //////
 
-bool running, proc_running;
+bool running, proc_running, game_running;
 int opt;
 string b_opt, s_move;
 
@@ -357,5 +357,6 @@ int main()
     main_render(0);
     running = true;
     while (running) { menu_arrng(); }
+    clearscr();
     return 0;
 }
