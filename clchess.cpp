@@ -21,6 +21,15 @@ string black_n;
 vector<string> pcap_white;
 vector<string> pcap_black;
 
+string current;
+vector<vector<string>> current_col = {{"GAME BOARD READY!"}, 
+                                      {"WHITE", "AT", "SELECTED"}, 
+                                      {"BLACK", "AT", "SELECTED"}, 
+                                      {"WHITE", "MOVED FROM", "TO"}, 
+                                      {"BLACK", "MOVED FROM", "TO"}, 
+                                      {"WHITE", "CAPTURED AT"}, 
+                                      {"BLACK", "CAPTURED AT"}};
+
 vector<vector<string>> board;
 vector<vector<string>> bsave;
 vector<vector<string>> blank_board = {{"    ", "| A|", "| B|", "| C|", "| D|", "| E|", "| F|", "| G|", "| H|", "    "}, 
@@ -77,25 +86,6 @@ void init_opt(int p)
 void clearscr() { cout << "\033[2J\033[1;1H"; }
 void pausescr() { cin.get(); }
 
-void print_board(vector<vector<string>> p_board)
-{
-    for (int i = 0; i < p_board.size(); i++)
-    {
-        cout << "::::    ";
-        for (int j = 0; j < p_board[i].size(); j++) { cout << p_board[i][j]; }
-        cout << "    ::::" << endl;
-    }
-}
-
-void print_pcap()
-{
-    cout << "::::    White - Pieces Captured: ";
-    for (int i = 0; i < pcap_white.size(); i++) { cout << pcap_white[i] << " "; }
-    cout << endl << "::::    Black - Pieces Captured: ";
-    for (int i = 0; i < pcap_black.size(); i++) { cout << pcap_black[i] << " "; }
-    cout << endl;
-}
-
 ////// ////// MENU RENDERING
 
 void main_render(int scr)
@@ -117,11 +107,11 @@ void main_render(int scr)
             cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
             cout << endl;
             cout << endl;
-            cout << "-- CLChess - Version 1.0.0" << endl;
-            cout << "-- Galaxius Computer Software" << endl;
+            cout << "-- CLCHESS - VERSION 1.0.0" << endl;
+            cout << "-- GALAXIUS COMPUTER SOFTWARE" << endl;
             cout << endl;
             cout << endl;
-            cout << "== Press Enter to Begin ==" << endl;
+            cout << "== PRESS ENTER TO BEGIN ==" << endl;
             pausescr();
             break;
         case 1:
@@ -129,30 +119,30 @@ void main_render(int scr)
             clearscr();
             cout << endl;
             cout << "::::" << endl;
-            cout << "::::    Main Menu" << endl;
+            cout << "::::    MAIN MENU" << endl;
             cout << "::::" << endl;
-            cout << "::::    1. Start Game" << endl;
-            cout << "::::    2. Continue Game" << endl;
-            cout << "::::    3. Help" << endl;
-            cout << "::::    4. Credits" << endl;
-            cout << "::::    5. Quit" << endl;
+            cout << "::::    1. START GAME" << endl;
+            cout << "::::    2. CONTINUE GAME" << endl;
+            cout << "::::    3. HELP" << endl;
+            cout << "::::    4. CREDITS" << endl;
+            cout << "::::    5. QUIT" << endl;
             cout << "::::" << endl;
             cout << endl;
             cout << endl;
-            cout << "Select: ";
+            cout << "SELECT: ";
             cin >> opt;
             break;
         case 2:
             clearscr();
             cout << endl;
-            cout << "::::    Game Credits" << endl;
+            cout << "::::    GAME CREDITS" << endl;
             cout << "::::" << endl;
-            cout << "::::    Command Line Chess (CLChess)" << endl;
-            cout << "::::    Copyright (c) 2020 - Galaxius Computer Software" << endl;
-            cout << "::::    Programmed by GalacticSand" << endl;
+            cout << "::::    COMMAND LINE CHESS (CLCHESS)" << endl;
+            cout << "::::    COPYRIGHT (c) 2020 - GALAXIUS COMPUTER SOFTWARE" << endl;
+            cout << "::::    PROGRAMMED BY GALACTICSAND" << endl;
             cout << endl;
             cout << endl;
-            cout << "== Press Enter to Continue ==" << endl;
+            cout << "== PRESS ENTER TO CONTINUE ==" << endl;
             pausescr();
             break;
         case 3:
@@ -163,9 +153,9 @@ void main_render(int scr)
             cout << "::::" << endl;
             cout << "::::" << endl;
             cout << endl;
-            cout << "Are you sure you want to quit? (Y/N) ";
+            cout << "ARE YOU SURE YOU WANT TO QUIT? (Y/N) ";
             cin >> b_opt;
-            if (b_opt == "Y" || b_opt == "y") { running = false; }
+            if (b_opt_map[b_opt]) { running = false; }
         default:
             break;
     }
@@ -179,57 +169,57 @@ void start_render(int scr)
             clearscr();
             cout << endl;
             cout << "::::" << endl;
-            cout << "::::    Start Game / Game Mode" << endl;
+            cout << "::::    START GAME / GAME MODE" << endl;
             cout << "::::" << endl;
-            cout << "::::    Choose Game Mode:" << endl;
-            cout << "::::    1. Regular Game" << endl;
-            cout << "::::    2. Sandbox Game (WIP)" << endl;
+            cout << "::::    CHOOSE GAME MODE:" << endl;
+            cout << "::::    1. REGULAR GAME" << endl;
+            cout << "::::    2. SANDBOX GAME (WIP)" << endl;
             cout << "::::" << endl;
             cout << endl;
             cout << endl;
-            cout << "Select: ";
+            cout << "SELECT: ";
             cin >> game_mode;
         case 1:
             clearscr();
             cout << endl;
             cout << "::::" << endl;
-            cout << "::::    Start Game / Players" << endl;
+            cout << "::::    START GAME / PLAYERS" << endl;
             cout << "::::" << endl;
-            cout << "::::    Player 1 (White): " << endl;
-            cout << "::::    Player 2 (Black): " << endl;
+            cout << "::::    PLAYER 1 (WHITE): " << endl;
+            cout << "::::    PLAYER 2 (BLACK): " << endl;
             cout << "::::" << endl;
             cout << endl;
             cout << endl;
-            cout << "Enter Player 1: ";
+            cout << "ENTER PLAYER 1: ";
             cin >> white_n;
         case 2:
             clearscr();
             cout << endl;
             cout << "::::" << endl;
-            cout << "::::    Start Game / Players" << endl;
+            cout << "::::    START GAME / PLAYERS" << endl;
             cout << "::::" << endl;
-            cout << "::::    Player 1 (White): " << white_n << endl;
-            cout << "::::    Player 2 (Black): " << endl;
+            cout << "::::    PLAYER 1 (WHITE): " << white_n << endl;
+            cout << "::::    PLAYER 2 (BLACK): " << endl;
             cout << "::::" << endl;
             cout << endl;
             cout << endl;
-            cout << "Enter Player 2: ";
+            cout << "ENTER PLAYER 2: ";
             cin >> black_n;
         case 3:
             clearscr();
             cout << endl;
             cout << "::::" << endl;
-            cout << "::::    Start Game / Players" << endl;
+            cout << "::::    START GAME / PLAYERS" << endl;
             cout << "::::" << endl;
-            cout << "::::    Player 1 (White): " << white_n << endl;
-            cout << "::::    Player 2 (Black): " << black_n << endl;
+            cout << "::::    PLAYER 1 (WHITE): " << white_n << endl;
+            cout << "::::    PLAYER 2 (BLACK): " << black_n << endl;
             cout << "::::" << endl;
             cout << endl;
             cout << endl;
-            cout << "Start Game with these settings? (Y/N) ";
+            cout << "START GAME WITH THESE SETTINGS? (Y/N) ";
             cin >> b_opt;
             break;
-            if (b_opt == "Y" || b_opt == "y") { proc_running = false; }
+            if (b_opt_map[b_opt]) { proc_running = false; }
         default:
             break;
         
@@ -260,6 +250,39 @@ void help_render(int scr)
 
 ////// ////// GAME RENDERING
 
+void print_board(vector<vector<string>> p_board)
+{
+    for (int i = 0; i < p_board.size(); i++)
+    {
+        cout << "::::    ";
+        for (int j = 0; j < p_board[i].size(); j++) { cout << p_board[i][j]; }
+        cout << "    ::::" << endl;
+    }
+}
+
+void print_pcap()
+{
+    cout << "::::    WHITE - PIECES CAPTURED: ";
+    for (int i = 0; i < pcap_white.size(); i++) { cout << pcap_white[i] << " "; }
+    cout << endl << "::::    BLACK - PIECES CAPTURED: ";
+    for (int i = 0; i < pcap_black.size(); i++) { cout << pcap_black[i] << " "; }
+    cout << endl;
+}
+
+void print_current(int msg)
+{
+    cout << "::::    ";
+    switch(msg)
+    {
+        case 0:
+            cout << current_col[0][0];
+            break;
+        case 1:
+            break;
+    }
+    cout << endl;
+}
+
 void game_render(int scr)
 {
     switch(scr)
@@ -273,7 +296,10 @@ void game_render(int scr)
             cout << "::::" << endl;
             print_pcap();
             cout << "::::" << endl;
+            print_current(0);
             cout << "::::" << endl;
+            cout << endl;
+            cout << "> ";
             break;
         case 1:
             break;
