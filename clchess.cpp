@@ -6,32 +6,30 @@ using namespace std;
 
 ////// DATA DIVISION //////
 
-bool running;
-bool proc_running;
+bool running, proc_running;
 int opt;
-string b_opt;
+string b_opt, s_move;
 
 vector<int> opt_list;
 map<string, bool> b_opt_map = {{"Y", true}, {"y", true}, 
                                {"N", false}, {"n", false}};
 
 int game_mode;
-string white_n;
-string black_n;
-vector<string> pcap_white;
-vector<string> pcap_black;
+string white_n, black_n;
+vector<string> pcap_white, pcap_black;
+
+string piece_moved, piece_taken, spot_a, spot_b;
 
 string current;
 vector<vector<string>> current_col = {{"GAME BOARD READY!"}, 
                                       {"WHITE", "AT", "SELECTED"}, 
                                       {"BLACK", "AT", "SELECTED"}, 
-                                      {"WHITE", "MOVED FROM", "TO"}, 
-                                      {"BLACK", "MOVED FROM", "TO"}, 
+                                      {"MOVED WHITE", "FROM", "TO"}, 
+                                      {"MOVED BLACK", "FROM", "TO"}, 
                                       {"WHITE", "CAPTURED AT"}, 
                                       {"BLACK", "CAPTURED AT"}};
 
-vector<vector<string>> board;
-vector<vector<string>> bsave;
+vector<vector<string>> board, bsave;
 vector<vector<string>> blank_board = {{"    ", "| A|", "| B|", "| C|", "| D|", "| E|", "| F|", "| G|", "| H|", "    "}, 
                                       {"| 8|", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "| 8|"}, 
                                       {"| 7|", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "[  ]", "| 7|"}, 
@@ -56,6 +54,7 @@ vector<vector<string>> def_board = {{"    ", "| A|", "| B|", "| C|", "| D|", "| 
 
 vector<string> ptype_white = {"  ", "wP", "wR", "wN", "wB", "wQ", "wK"};
 vector<string> ptype_black = {"  ", "bP", "bR", "bN", "bB", "bQ", "bK"};
+vector<string> ptype_names = {"  ", "PAWN", "ROOK", "KNIGHT", "QUEEN", "KING"};
 
 vector<string> d_letter_map = {" ", "A", "B", "C", "D", "E", "F", "G", "H"};
 map<string, int> c_letter_map = {{"A", 1}, {"a", 1}, 
@@ -218,8 +217,12 @@ void start_render(int scr)
             cout << endl;
             cout << "START GAME WITH THESE SETTINGS? (Y/N) ";
             cin >> b_opt;
+            if (b_opt_map[b_opt]) 
+            { 
+                board = def_board;
+                proc_running = false; 
+            }
             break;
-            if (b_opt_map[b_opt]) { proc_running = false; }
         default:
             break;
         
@@ -289,6 +292,7 @@ void game_render(int scr)
     {
         case 0:
             clearscr();
+            cout << "::::" << endl;
             print_board(board);
             cout << "::::" << endl;
             cout << "::::" << endl;
@@ -300,6 +304,7 @@ void game_render(int scr)
             cout << "::::" << endl;
             cout << endl;
             cout << "> ";
+            cin >> s_move;
             break;
         case 1:
             break;
@@ -312,7 +317,7 @@ void game_render(int scr)
 
 void game_arrng()
 {
-    
+    game_render(0);
 }
 
 ////// ////// MENU ARRANGEMENT
@@ -325,6 +330,8 @@ void menu_arrng()
         case 1:
             proc_running = true;
             while (proc_running) { start_render(0); }
+            proc_running = true;
+            while (proc_running) { game_arrng(); }
             break;
         case 2:
             proc_running = true;
