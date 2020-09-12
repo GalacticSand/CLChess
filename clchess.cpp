@@ -291,6 +291,7 @@ void game_render(int scr)
     switch(scr)
     {
         case 0:
+            bsave = board;
             clearscr();
             cout << "::::" << endl;
             print_board(board);
@@ -311,6 +312,19 @@ void game_render(int scr)
         default:
             break;
     }
+}
+
+////// ////// GAME MECHANICS
+
+void move_piece(int sr, int sc, int dr, int dc)
+{
+    string cpiece = bsave[sr][sc];
+    string dpiece = to_string(bsave[dr][dc].at(1));
+    dpiece.append(to_string(bsave[dr][dc].at(2)));
+    if (bsave[sr][sc] != "[  ]" && to_string(dpiece.at(0)) == "w") { pcap_black.push_back(dpiece); }
+    else if (bsave[sr][sc] != "[  ]" && to_string(dpiece.at(0)) == "b") { pcap_white.push_back(dpiece); }
+    bsave[sr][sc] = "[  ]";
+    bsave[dr][dc] = cpiece;
 }
 
 ////// ////// GAME ARRANGEMENT
